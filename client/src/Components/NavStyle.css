@@ -1,0 +1,13 @@
+nav{
+    background-color: #423835;
+}
+
+.nav-link:hover{
+    color: #ebb36b !important;
+}
+
+
+.navbar-brand text-light active:hover{
+    font-weight: bolder !important;
+    color: #ebb36b !important;
+}
