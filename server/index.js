@@ -12,6 +12,11 @@ app.use(cors())
 
 mongoose.connect("mongodb://localhost:27017/testingChoco")
 
+
+app.get("/", (req, res) => res.status(200).send("Home Page"));
+
+
+
 //this is login
 
 app.post('/login', (req, res) => {
@@ -42,7 +47,7 @@ app.post('/register', (req, res) => {
 
 // to add a product
 
-app.post('/addproduct', (req, res) => {
+app.post('/products/add', (req, res) => {
 
     productModel.create(req.body)
         .then(products => res.json(products))
@@ -53,18 +58,35 @@ app.post('/addproduct', (req, res) => {
     // console.log("Product Details >>>>>>>",productDetail);
 })
 
+
 // get the data from the database
 
 
-app.get('/getproduct', (req, res) => {
-    productModel.find((err, data) => {
-        if (err) {
-            res.status(500).send(err)
-        } else {
-            res.status(200).send(data)
-        }
-    })
-})
+
+// app.get('/products/get', (req, res) => {
+//     productModel.find((err, data) => {
+//         if (err) {
+//             res.status(500).send(err)
+//         } else {
+//             res.status(200).send(data)
+//         }
+//     })
+// })
+
+
+app.get("/products/get", (req, res) => {
+    productModel.find()
+        .then((products) => {
+            res.status(200).json(products);
+        })
+        .catch((error) => {
+            res.status(500).json({
+                error: 'Failed to fetch products',
+                message: error.message
+            });
+        });
+});
+
 
 
 app.listen(3001, () => {

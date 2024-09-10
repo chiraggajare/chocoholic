@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
-
+import axios from '../axios'
 export default function AddProducts() {
 
     const [title,setTitle] = useState('');
@@ -10,7 +9,7 @@ export default function AddProducts() {
 
     const addProduct =(e)=>{
         e.preventDefault()
-        axios.post('http://localhost:3001/addproduct', { title,imageUrl, price, desc })
+        axios.post('http://localhost:3001/products/add', { title,imageUrl, price, desc })
             .then(()=>{
                 setTitle('')
                 setImageUrl('')
@@ -47,7 +46,7 @@ export default function AddProducts() {
 
                                             <div className="col-12">
                                                 <div className="form-floating mb-3">
-                                                    <input type="text" className="form-control" name="Image" id="Image" placeholder="Image"  onChange={(e)=>setPrice(e.target.value)}/>
+                                                    <input type="text" className="form-control" name="Image" id="Image" placeholder="Image"  onChange={(e)=>setImageUrl(e.target.value)}/>
                                                     <label className="form-label">Image Url</label>
                                                 </div>
                                             </div>
