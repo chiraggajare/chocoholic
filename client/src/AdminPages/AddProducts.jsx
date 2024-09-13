@@ -34,7 +34,7 @@ export default function AddProducts() {
                                         <a href="#!">
                                         </a>
                                     </div>
-                                    <h2 className="fs-6 fw-normal text-center mb-4">Add Products </h2>
+                                    <h3 className="fs-3 text-secondary fw-normal text-center mb-4">Add Products </h3>
                                     <form>
                                         <div className="row gy-2 overflow-hidden">
                                             <div className="col-12">

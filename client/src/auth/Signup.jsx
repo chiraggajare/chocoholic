@@ -30,7 +30,7 @@ export default function Signup() {
                                     <a href="#!">
                                     </a>
                                 </div>
-                                <h2 className="fs-6 fw-normal text-center mb-4">Enter your details to register</h2>
+                                <h1 className="fs-6 fw-normal text-center mb-4">Enter your details to register</h1>
                                 <form onSubmit={handleSubmit}>
                                     <div className="row gy-2 overflow-hidden">
                                         <div className="col-12">
@@ -62,19 +62,19 @@ export default function Signup() {
 
                                         <div className="col-12">
                                             <div className="d-grid my-3">
-                                                <button className="btn btn-primary btn-lg" type="submit">Sign up</button>
+                                                <button className="btn btn-success rounded-1" type="submit">Sign up</button>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
                                 <div className="col-12 text-center">
-                                    <p className="m-0 text-secondary text-center">Already have an account? <a href="/login" className="link-primary text-decoration-none">Log in</a></p>
-                                    <a className="nav-link mx-2 active fst-italic" aria-current="page" href="/home">Go to Home</a>
+                                    <p className="m-0 text-secondary text-center">Already have an account? <a  onClick={()=>navigate('/login')}  className="link-primary text-decoration-none">Log in</a></p>
+                                    <a className="nav-link mx-2 active fst-italic" aria-current="page" onClick={()=>navigate('/home')}>Go to Home</a>
                                 </div>
                                 
                             </div>
                         </div>
-                    </div>
+                    </div> 
                 </div>
             </div>
         </section>

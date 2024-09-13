@@ -2,11 +2,13 @@ import React from "react";
 import { useStateValue } from "../StateProvider";
 import Navbar from "../Components/Navbar";
 import styled from "styled-components";
+import Footer from "../Components/Footer";
 import CurrencyFormat from "react-currency-format";
 import { getCartTotal } from '../reducer';
+import './CartStyles.css';
 
 export default function CartPage() {
-    const [{ cart },dispatch] = useStateValue();
+    const [{ cart }, dispatch] = useStateValue();
     const removefromcart = (e, id) => {
         e.preventDefault();
 
@@ -23,16 +25,16 @@ export default function CartPage() {
             <Navbar />
             <Main>
                 <ShoppingCart>
-                    <h2>Shopping Cart</h2>
+                <h2 className="text-center">YOUR BASKET</h2>
 
                     {
                         cart?.map((product) => (<Product className="my-3">
-                            <Image><img src={product.imageUrl} alt="" /></Image>
+                            <Image><img src={product.imageUrl} className="card-img-top rounded-3" alt="" /></Image>
                             <div className="mx-3">
-                                <Title><h3>{product.title}</h3></Title>
-                                <Desc><p>{product.desc}</p></Desc>
-                                <Price><p>{product.price}</p></Price>
-                                <button onClick={(e) => removefromcart(e, product.id)}>Remove</button>
+                                <Title><h5 className="card-title my-1">{product.title}</h5></Title>
+                                <Desc><p className="card-text my-1">{product.desc}</p></Desc>
+                                <Price><p className="card-text my-1">₹ {product.price}</p></Price>
+                                <button className="btn rounded-1 my-1" onClick={(e) => removefromcart(e, product.id)}>Remove</button>
                             </div>
                         </Product>))
 
@@ -61,9 +63,10 @@ export default function CartPage() {
                         prefix={"₹ "}
 
                     />
-                    <button>Proceed to Checkout</button>
+                    <button className="btn w-75 rounded-0 my-3">Proceed to Checkout</button>
                 </SubTotal>
             </Main>
+            <Footer/>
         </Container>
     )
 }
@@ -72,43 +75,37 @@ export default function CartPage() {
 const Container = styled.div`
 
 width: 100%;
-max-width: 1400px;
-height: fit-content;
+// height: fit-content;
+height: 100vh;
+
 margin: auto;
-border: 1px solid red;
 position: relative;
+
 
 `
 
 const Main = styled.div`
     display: flex;
     padding: 15px
-
-
 `
 const ShoppingCart = styled.div`
 
     padding: 15px;
     flex: 0.7;
-    border: red solid;
+    border: 1px solid lightgrey;
+    border-radius: 8px;
 
-
-    h2{
-    font-weight: 500;
-    border-bottom:1px solid lightgrey;
-    padding-bottom: 15px;
-    }
 `
 const SubTotal = styled.div`
     flex: 0.3;
-    border: red solid;
+    border: 1px solid lightgrey;
     margin-left: 15px;
     height: 200px;
     display: flex;
     flex-direction: column;
     align-items:center;
     justify-content: center;
-
+    border-radius: 8px;
 
 
     p {
@@ -124,18 +121,14 @@ const SubTotal = styled.div`
     margin-left: 10px;
     }} 
 
-    button {
-    width: 65%;
-    height: 33px;
-    margin-top: 20px;
-    background-color: #ffd814;
-    border: none;
-    outline: none;
+    button{
+    background-color: #BFA760;
 
-    border-radius: 8px;
+    &:hover{
+        background-color: #D4BE81;
     }
-
-
+    }
+    }
 
 `
 
@@ -145,10 +138,11 @@ const Product = styled.div`
     align-items: center;
 
     button{
-    background-color: skyblue;
+    color: white;
+    background-color: #415a77;
 
     &:hover{
-        color: white;
+        background-color: #778da9;
     }
     }
 
@@ -168,4 +162,9 @@ const Desc = styled.div`
 flex: 0.7;
 `
 const Price = styled.div``
+
+
+
+
+
 

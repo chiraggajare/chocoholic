@@ -11,3 +11,8 @@ nav{
     font-weight: bolder !important;
     color: #ebb36b !important;
 }
+
+
+#navbarMid{
+    margin-left: 40px;
+}

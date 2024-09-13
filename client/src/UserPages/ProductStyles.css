@@ -4,7 +4,15 @@ main{
     place-items: center;
     width: 100%;
 
-    grid-template-rows: 420px;
-    grid-template-columns: repeat(4,300px);
-    grid-gap: 20px;
+    grid-template-rows: 400px;
+    grid-template-columns: repeat(3,370px);
+    grid-gap: 15px;
+    
+}
+
+
+h2{
+    font-family: 'Times New Roman', Times, serif;
+    color: rgb(120, 113, 87);
+    font-weight: 100;
 }

@@ -32,7 +32,7 @@ export default function Login() {
                                     <a href="#!">
                                     </a>
                                 </div>
-                                <h2 className="fs-6 fw-normal text-center mb-4">Enter your details to Log In</h2>
+                                <h1 className="fs-6 fw-normal text-center mb-4">Enter your details to Log In</h1>
                                 <form onSubmit={handleSubmit}>
                                     <div className="row gy-2 overflow-hidden">
 
@@ -51,14 +51,14 @@ export default function Login() {
 
                                         <div className="col-12">
                                             <div className="d-grid my-3">
-                                                <button className="btn btn-primary btn-lg" type="submit">Log In</button>
+                                                <button className="btn btn-success rounded-1" type="submit">Log In</button>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
                                 <div className="col-12 text-center">
-                                    <p className="m-0 text-secondary text-center">Don't have an account? <a href="/register" className="link-primary text-decoration-none">Sign in</a></p>
-                                    <a className="nav-link mx-2 active fst-italic" aria-current="page" href="/home">Go to Home</a>
+                                    <p className="m-0 text-secondary text-center">Don't have an account? <a  onClick={()=>navigate('/register')} className="link-primary text-decoration-none">Sign in</a></p>
+                                    <a className="nav-link mx-2 active fst-italic" aria-current="page"  onClick={()=>navigate('/home')}>Go to Home</a>
 
                                 </div>
                             </div>

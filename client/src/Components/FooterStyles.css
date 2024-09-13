@@ -1,0 +1,28 @@
+footer {
+    background-color: #e3d5ca;
+    position:absolute;
+    width: 100%;
+    bottom:auto;
+}
+
+#bottom {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+h6{
+    color: #5d523e;
+    font-weight: 700;
+
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+p{
+    color: #363636;
+    font-size: small;
+}
+
+

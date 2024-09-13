@@ -2,8 +2,14 @@ import React from "react";
 import Navbar from "../Components/Navbar";
 import './HomeStyle.css';
 // import Footer from "../Components/Footer";
+import { useNavigate } from "react-router-dom";
+import Footer from "../Components/Footer";
+import About from "./About";
 
 export default function Home() {
+
+    const navigate = useNavigate();
+
     return (
         <>
 
@@ -13,17 +19,17 @@ export default function Home() {
                 <br></br><br></br><br></br>
                 <figure class="text-center fs-3 m-5">
                     <blockquote class="blockquote fs-3">
-                        <h2>Anything is good if it's made of chocolate.</h2>
+                        <h2 id="hometitle">Anything is good if it's made of chocolate.</h2>
                     </blockquote>
                     <figcaption class="blockquote-footer text-light">
                         <cite className="text-light">Jo Brand</cite>
                     </figcaption>
                 </figure>
                 <br></br><br></br>
-                <p id="bgtext" className="text-center">Chocolat Magasin Spécialisé</p>
+                <p id="bgtext" className="text-center text-light">Chocolat Magasin Spécialisé</p>
                 <br></br><br></br><br></br>
 
-                <a type="button" id="shopOn" class="btn bg-transparent my-0 btn-outline-light rounded-0 text-light" href="/products">Shop Online</a>
+                <a type="button" id="shopOn" class="btn bg-transparent my-0 btn-outline-light rounded-0 text-light" onClick={()=>navigate('/products')}>Shop Online</a>
                 <br></br><br></br><br></br>
                 <br></br><br></br>
 
@@ -85,9 +91,7 @@ export default function Home() {
                     </div>
                 </section>
             </div>
-
-            {/* <Footer/> */}
-
+            <Footer/>
         </>
 
     )
