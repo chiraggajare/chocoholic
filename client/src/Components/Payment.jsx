@@ -1,58 +1,237 @@
 import React from "react";
-import './PaymentStyles.css'
 import Navbar from "./Navbar";
 import { useStateValue } from "../StateProvider";
+import styled from "styled-components";
+import CurrencyFormat from "react-currency-format";
+import { getCartTotal } from '../reducer';
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import Address from "./Address";
+import axios from "../axios";
+
 
 export default function Payment() {
 
     const [{ address }] = useStateValue();
+    const [{ cart }, dispatch] = useStateValue();
+    const elements = useElements()
+    const stripe = useStripe()
+
+    const confirmPayment = async (e) => {
+        e.preventDefault();
+
+        await stripe
+            .confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: elements.getElement(CardElement),
+                },
+            })
+            .then((result) => {
+                axios.post("/orders/add", {
+                    basket: basket,
+                    price: getCartTotal(basket),
+                    email: user?.email,
+                    address: address,
+                });
+
+                dispatch({
+                    type: "EMPTY_BASKET",
+                });
+                navigate("/");
+            })
+            .catch((err) => console.warn(err));
+    };
+
 
     return (
-
-        <div>
+        <Container2>
             <Navbar />
 
+            <Main3>
+                <ReviewContainer>
+                    <h2>Review Your Order</h2>
 
-            <div className="mainPayment">
-                <h1>Payment Page</h1>
+                    <AddressContainer>
+                        <h5>Shipping Address</h5>
 
-                <div className="ReviewContainer ">
+                        <div>
+                            <p>Name: {address.fullName}</p>
+                            <p>Phone Number: {address.phone}</p>
+                            <p>Full Address: {address.address}</p>
+                            <p>Pincode: {address.pincode}</p>
+                        </div>
+                    </AddressContainer>
 
-                    <div className="AddressContainer">
-                        <h2>Delivery Address</h2>
+                    <PaymentContainer>
+                        <h5>Payment Method</h5>
 
-                        <p>Name: {address.fullName}</p>
-                        <p>Phone Number: {address.phone}</p>
-                        <p>Full Address: {address.address}</p>
-                        <p>Pincode: {address.pincode}</p>
+                        <div>
+                            <p>Card Details: </p>
 
+                            <CardElement />
+                        </div>
+                    </PaymentContainer>
 
+                    <OrderContainer>
+                        <h5>Your Order</h5>
 
-                    </div>
-                    <div className="OrderContainer">
-                        <h2>Your Orders</h2>
+                        <div>
+                            {
+                                cart?.map((product) => (<Product className="my-3">
+                                    <Image><img src={product.imageUrl} className="card-img-top rounded-3" alt="" /></Image>
+                                    <div className="mx-3">
+                                        <Title><h5 className="card-title my-1">{product.title}</h5></Title>
+                                        <Desc><p className="card-text my-1">{product.desc}</p></Desc>
+                                        <Price><p className="card-text my-1">₹ {product.price}</p></Price>
+                                    </div>
+                                </Product>))
 
-                    </div>
+                            }
+                        </div>
+                    </OrderContainer>
+                </ReviewContainer>
+                <SubTotal>
+                    <h5>Sub Total</h5>
 
+                    <CurrencyFormat
 
-                    <div className="PaymentContainer">
-                        <h2>Payment Method</h2>
+                        renderText={(value) => (
+                            <>
+                                <p>
+                                    Subtotal ( {cart.length} items ) : <strong> {value}</strong>
+                                </p>
+                            </>
+                        )}
+                        decimalScale={2}
+                        value={getCartTotal(cart)}
+                        displayType="text"
+                        thousandSeparator={true}
+                        prefix={"₹ "}
+                    />
+                    <button className="btn" onClick={confirmPayment}>Place Order</button>
 
-                    </div>
-
-
-
-                </div>
-
-
-
-
-
-            </div>
-
-
-        </div>
-
-
-    )
+                </SubTotal>
+            </Main3>
+        </Container2>
+    );
 }
+
+const Container2 = styled.div`
+
+`;
+
+const Main3 = styled.div`
+display: flex;
+
+`;
+
+const ReviewContainer = styled.div`
+background-color: #fff;
+flex: 0.7;
+padding: 15px;
+h2 {
+    font-weight: 500;
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 15px;
+}
+    border: 1px solid red;
+
+`;
+
+const AddressContainer = styled.div`
+margin-top: 20px;
+div {
+    margin-top: 10px;
+    margin-left: 10px;
+
+    p {
+    font-size: 14px;
+    margin-top: 4px;
+    }
+}
+    border: 1px solid red;
+
+`;
+
+const PaymentContainer = styled.div`
+margin-top: 15px;
+
+div {
+    margin-top: 15px;
+    margin-left: 15px;
+
+    p {
+    font-size: 14px;
+    }
+}
+    border: 1px solid red;
+`;
+
+const OrderContainer = styled.div`
+margin-top: 30px;
+border: 1px solid red;
+`;
+
+const SubTotal = styled.div`
+    flex: 0.3;
+    border: 1px solid lightgrey;
+    margin-left: 15px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    border-radius: 8px;
+
+
+    p {
+    font-size: 20px;
+    }
+
+    small {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+
+    span {
+    margin-left: 10px;
+    }} 
+
+    button{
+    background-color: #BFA760;
+
+    &:hover{
+        background-color: #D4BE81;
+    }
+    }
+    }
+
+`
+
+
+const Product = styled.div`
+
+    display: flex;
+    align-items: center;
+
+    button{
+    color: white;
+    background-color: #415a77;
+
+    &:hover{
+        background-color: #778da9;
+    }
+    }
+`
+const Image = styled.div`
+flex: 0.3;
+    img{
+    width:auto;
+    height:200px;
+    border-radius: 10px;
+    }
+`
+const Title = styled.div``
+const Desc = styled.div`
+flex: 0.7;
+`
+const Price = styled.div``

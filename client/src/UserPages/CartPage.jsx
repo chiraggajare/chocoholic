@@ -28,7 +28,7 @@ export default function CartPage() {
             <Navbar />
             <Main>
                 <ShoppingCart>
-                <h2 className="text-center">YOUR BASKET</h2>
+                    <h2 className="text-center">YOUR BASKET</h2>
 
                     {
                         cart?.map((product) => (<Product className="my-3">
@@ -64,12 +64,11 @@ export default function CartPage() {
                         displayType="text"
                         thousandSeparator={true}
                         prefix={"₹ "}
-
                     />
-                    <button className="btn w-75 rounded-0 my-3" onClick={()=>navigate('/address')}>Proceed to Checkout</button>
+                    <button className="btn w-75 rounded-0 my-3" onClick={() => navigate('/address')}>Proceed to Checkout</button>
                 </SubTotal>
             </Main>
-            <Footer/>
+            <Footer />
         </Container>
     )
 }
@@ -144,11 +143,10 @@ const Product = styled.div`
     color: white;
     background-color: #415a77;
 
-    &:hover{
+    &:hover{ 
         background-color: #778da9;
     }
     }
-
 `
 const Image = styled.div`
 flex: 0.3;
@@ -157,11 +155,9 @@ flex: 0.3;
     height:200px;
     border-radius: 10px;
     }
-
 `
 const Title = styled.div``
 const Desc = styled.div`
-
 flex: 0.7;
 `
 const Price = styled.div``

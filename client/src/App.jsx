@@ -13,8 +13,12 @@ import Footer from './Components/Footer'
 import AddProducts from './AdminPages/AddProducts'
 import Address from './Components/Address'
 import Payment from './Components/Payment'
-// import AboutUs from './Components/AboutUs'
-import Card from './Components/Card'
+import { Elements } from '@stripe/react-stripe-js'
+import { loadStripe } from '@stripe/stripe-js'
+
+const promise = loadStripe(
+  'pk_test_51BTUDGJAJfZb9HEBwDg86TN1KNprHjkfipXmEDMb0gSCassK5T3ZfxsAbcgKVmAIXF7oZ6ItlZZbXO6idTHE67IM007EwQ4uN3'
+)
 
 function App() {
 
@@ -24,18 +28,23 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route index element={<Navbar />}></Route>
-        <Route index element={<Footer/>}></Route>
+        <Route index element={<Footer />}></Route>
         <Route path='/about' element={<About />}></Route>
         <Route path='/products' element={<Products />}></Route>
         <Route path='/cart' element={<CartPage />}></Route>
         {/* <Route path='/about' element={<AboutUs/>}></Route> */}
         <Route path="/home" element={<Home />}></Route>
         <Route path="/address" element={<Address />}></Route>
-        <Route path="/payment" element={<Payment />}></Route>
+        <Route path="/payment" element={
+          <Elements stripe={promise}>
+            <Payment />
+          </Elements>
+        }>
+        </Route>
 
-        
 
-        
+
+
 
 
 

@@ -17,10 +17,8 @@ export default function AddProducts() {
                 setDesc(0)
             })
             .catch(err => console.log(err))
-
-
-    } 
-
+    }
+    
     return (
 
         <div>
@@ -57,6 +55,7 @@ export default function AddProducts() {
                                                     <label className="form-label">Price</label>
                                                 </div>
                                             </div>
+
                                             <div className="col-12">
                                                 <div className="form-floating mb-3">
                                                     <input type="text" className="form-control" name="Description" id="Description" placeholder="Description"  onChange={(e)=>setDesc(e.target.value)}/>
@@ -71,8 +70,6 @@ export default function AddProducts() {
                                             </div>
                                         </div>
                                     </form>
-                                    
-
                                 </div>
                             </div>
                         </div>
