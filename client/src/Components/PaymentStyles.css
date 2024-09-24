@@ -1,0 +1,11 @@
+.ReviewContainer{
+    flex: 0.7;
+    padding: 15px;
+    border: 1px solid red;
+}
+
+.PaymentTotal{
+    flex: 0.3;
+    padding: 15px;
+    border: 1px solid red;
+}

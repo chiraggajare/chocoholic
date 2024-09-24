@@ -6,8 +6,11 @@ import Footer from "../Components/Footer";
 import CurrencyFormat from "react-currency-format";
 import { getCartTotal } from '../reducer';
 import './CartStyles.css';
+import { useNavigate } from "react-router-dom";
+
 
 export default function CartPage() {
+    const navigate = useNavigate()
     const [{ cart }, dispatch] = useStateValue();
     const removefromcart = (e, id) => {
         e.preventDefault();
@@ -63,7 +66,7 @@ export default function CartPage() {
                         prefix={"₹ "}
 
                     />
-                    <button className="btn w-75 rounded-0 my-3">Proceed to Checkout</button>
+                    <button className="btn w-75 rounded-0 my-3" onClick={()=>navigate('/address')}>Proceed to Checkout</button>
                 </SubTotal>
             </Main>
             <Footer/>

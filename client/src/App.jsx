@@ -11,6 +11,8 @@ import About from './UserPages/About'
 import Navbar from './Components/Navbar'
 import Footer from './Components/Footer'
 import AddProducts from './AdminPages/AddProducts'
+import Address from './Components/Address'
+import Payment from './Components/Payment'
 // import AboutUs from './Components/AboutUs'
 import Card from './Components/Card'
 
@@ -28,6 +30,12 @@ function App() {
         <Route path='/cart' element={<CartPage />}></Route>
         {/* <Route path='/about' element={<AboutUs/>}></Route> */}
         <Route path="/home" element={<Home />}></Route>
+        <Route path="/address" element={<Address />}></Route>
+        <Route path="/payment" element={<Payment />}></Route>
+
+        
+
+        
 
 
 
