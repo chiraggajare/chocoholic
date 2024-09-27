@@ -1,6 +1,6 @@
 export const initialState = {
     cart: [],
-    user: null,
+    user: JSON.parse(localStorage.getItem("user")),
     address: {}
 };
 
@@ -42,7 +42,10 @@ const reducer = (state, action) => {
             };
 
         case "SET_USER":
-            return state;
+            return {
+                ...state,
+                user: action.user,
+            };
 
 
         case "SET_ADDRESS":

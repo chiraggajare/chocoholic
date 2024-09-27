@@ -37,7 +37,6 @@ export default function Products() {
                         desc={product.desc}
                         title={product.title}
                     />))}
-
             </main>
 
             <Footer/>

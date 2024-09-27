@@ -5,15 +5,20 @@ import { useStateValue } from "../StateProvider";
 import { useNavigate } from "react-router-dom";
 import axios from "../axios";
 
-
-
-
 export default function Navbar() {
 
-    const [{ cart }] = useStateValue();
+    const [{ cart, user }, dispatch] = useStateValue();
     const navigate = useNavigate();
 
+    const signOut = () => {
+        dispatch({
+            type: "SET_USER",
+            user: null,
+        });
 
+        localStorage.removeItem("user");
+        navigate("/home");
+    };
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-light p-1 sticky-top text-light">
@@ -39,9 +44,12 @@ export default function Navbar() {
                         </ul>
                         <div className="navbar-nav d-none d-lg-inline-flex ms-auto">
 
-                            <li className="nav-item">
-                                <a className="nav-link mx-2 active text-light" aria-current="page">Welcome { } !</a>
-                            </li>
+
+                            <div className="nav-item" onClick={user ? () => signOut() : () => navigate("/login")}>
+                                <a className="nav-link mx-2 active text-light">Welcome  {user ? user?.name : ""}</a>
+                            </div>
+
+
 
                             <div className="d-flex align-items-center justify-content-center text-light" >
                                 <a className="nav-link mx-1 active text-light" aria-current="page" onClick={() => navigate('/cart')}> <IoCartOutline /></a>
@@ -49,12 +57,12 @@ export default function Navbar() {
                             </div>
 
 
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                                 <a className="nav-link mx-2 active text-light" aria-current="page" onClick={() => navigate('/register')}>Sign In</a>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link mx-2 active text-light" aria-current="page" onClick={() => navigate('/login')}>Log In</a>
-                            </li>
+                            </li> */}
                         </div>
                     </div>
                 </div>

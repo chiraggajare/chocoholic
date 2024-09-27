@@ -14,31 +14,31 @@ export default function Payment() {
     const [{ address }] = useStateValue();
     const [{ cart }, dispatch] = useStateValue();
     const elements = useElements()
-    const stripe = useStripe()
+    // const stripe = useStripe()
 
     const confirmPayment = async (e) => {
         e.preventDefault();
 
-        await stripe
-            .confirmCardPayment(clientSecret, {
-                payment_method: {
-                    card: elements.getElement(CardElement),
-                },
-            })
-            .then((result) => {
-                axios.post("/orders/add", {
-                    basket: basket,
-                    price: getCartTotal(basket),
-                    email: user?.email,
-                    address: address,
-                });
+        // await stripe
+        //     .confirmCardPayment(clientSecret, {
+        //         payment_method: {
+        //             card: elements.getElement(CardElement),
+        //         },
+        //     })
+        //     .then((result) => {
+        //         axios.post("/orders/add", {
+        //             basket: basket,
+        //             price: getCartTotal(basket),
+        //             email: user?.email,
+        //             address: address,
+        //         });
 
-                dispatch({
-                    type: "EMPTY_BASKET",
-                });
-                navigate("/");
-            })
-            .catch((err) => console.warn(err));
+        //         dispatch({
+        //             type: "EMPTY_BASKET",
+        //         });
+        //         navigate("/");
+        //     })
+        //     .catch((err) => console.warn(err));
     };
 
 
@@ -47,13 +47,13 @@ export default function Payment() {
             <Navbar />
 
             <Main3>
-                <ReviewContainer>
+                <ReviewContainer className="m-3">
                     <h2>Review Your Order</h2>
 
                     <AddressContainer>
-                        <h5>Shipping Address</h5>
+                        <h5 className="m-3">Shipping Address</h5>
 
-                        <div>
+                        <div className="m-3">
                             <p>Name: {address.fullName}</p>
                             <p>Phone Number: {address.phone}</p>
                             <p>Full Address: {address.address}</p>
@@ -62,9 +62,9 @@ export default function Payment() {
                     </AddressContainer>
 
                     <PaymentContainer>
-                        <h5>Payment Method</h5>
+                        <h5 className="m-3">Payment Method</h5>
 
-                        <div>
+                        <div className="m-3">
                             <p>Card Details: </p>
 
                             <CardElement />
@@ -72,9 +72,9 @@ export default function Payment() {
                     </PaymentContainer>
 
                     <OrderContainer>
-                        <h5>Your Order</h5>
+                        <h5 className="m-3">Your Orders</h5>
 
-                        <div>
+                        <div className="m-3">
                             {
                                 cart?.map((product) => (<Product className="my-3">
                                     <Image><img src={product.imageUrl} className="card-img-top rounded-3" alt="" /></Image>
@@ -89,7 +89,7 @@ export default function Payment() {
                         </div>
                     </OrderContainer>
                 </ReviewContainer>
-                <SubTotal>
+                <SubTotal className="m-3">
                     <h5>Sub Total</h5>
 
                     <CurrencyFormat
@@ -133,8 +133,8 @@ h2 {
     border-bottom: 1px solid lightgray;
     padding-bottom: 15px;
 }
-    border: 1px solid red;
-
+border: 1px solid lightgrey;
+    border-radius: 8px;
 `;
 
 const AddressContainer = styled.div`
@@ -148,8 +148,8 @@ div {
     margin-top: 4px;
     }
 }
-    border: 1px solid red;
-
+border: 1px solid lightgrey;
+    border-radius: 8px;
 `;
 
 const PaymentContainer = styled.div`
@@ -163,13 +163,13 @@ div {
     font-size: 14px;
     }
 }
-    border: 1px solid red;
-`;
+border: 1px solid lightgrey;
+    border-radius: 8px;`;
 
 const OrderContainer = styled.div`
 margin-top: 30px;
-border: 1px solid red;
-`;
+border: 1px solid lightgrey;
+    border-radius: 8px;`;
 
 const SubTotal = styled.div`
     flex: 0.3;
@@ -180,8 +180,8 @@ const SubTotal = styled.div`
     flex-direction: column;
     align-items:center;
     justify-content: center;
+border: 1px solid lightgrey;
     border-radius: 8px;
-
 
     p {
     font-size: 20px;
@@ -228,6 +228,7 @@ flex: 0.3;
     width:auto;
     height:200px;
     border-radius: 10px;
+    
     }
 `
 const Title = styled.div``

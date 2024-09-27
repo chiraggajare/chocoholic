@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components"
 import './CardStyle.css'
 import { useStateValue } from "../StateProvider";
+import {ToastContainer, toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Card({ id, title, price, desc, imageUrl }) {
 
@@ -10,6 +12,8 @@ export default function Card({ id, title, price, desc, imageUrl }) {
     console.log("basket>>>>>", cart);
 
     function addToCart(e) {
+        // const notify = () => toast("Wow so easy !");
+
         e.preventDefault();
 
         dispatch({
@@ -21,6 +25,7 @@ export default function Card({ id, title, price, desc, imageUrl }) {
                 imageUrl,
                 desc,
             },
+        
         })
     }
 
