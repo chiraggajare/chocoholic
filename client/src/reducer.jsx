@@ -49,9 +49,15 @@ const reducer = (state, action) => {
 
 
         case "SET_ADDRESS":
-            return{
+            return {
                 ...state,
-                address:{...action.item},
+                address: { ...action.item },
+            }
+
+        case "EMPTY_CART":
+            return {
+                ...state,
+                cart: [],
             }
 
 

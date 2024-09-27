@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import { useStateValue } from "../StateProvider";
 import styled from "styled-components";
@@ -7,38 +7,51 @@ import { getCartTotal } from '../reducer';
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import Address from "./Address";
 import axios from "../axios";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Payment() {
 
     const [{ address }] = useStateValue();
     const [{ cart }, dispatch] = useStateValue();
+    const [clientSecret, setClientSecret] = useState("");
     const elements = useElements()
-    // const stripe = useStripe()
+    const stripe = useStripe()
+    const navigate = useNavigate();
+
+
+
+    useEffect(() => {
+        const fetchClientSecret = async () => {
+            const data = await axios.post("/payment/create", {
+                amount: getCartTotal(cart),
+            });
+
+            setClientSecret(data.data.clientSecret);
+        };
+
+        fetchClientSecret();
+        console.log("clientSecret is >>>>", clientSecret);
+    }, []);
+
 
     const confirmPayment = async (e) => {
         e.preventDefault();
 
-        // await stripe
-        //     .confirmCardPayment(clientSecret, {
-        //         payment_method: {
-        //             card: elements.getElement(CardElement),
-        //         },
-        //     })
-        //     .then((result) => {
-        //         axios.post("/orders/add", {
-        //             basket: basket,
-        //             price: getCartTotal(basket),
-        //             email: user?.email,
-        //             address: address,
-        //         });
-
-        //         dispatch({
-        //             type: "EMPTY_BASKET",
-        //         });
-        //         navigate("/");
-        //     })
-        //     .catch((err) => console.warn(err));
+        await stripe
+            .confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: elements.getElement(CardElement),
+                },
+            })
+            .then((result) => {
+                alert("Payment successful!")
+                dispatch({
+                    type: 'EMPTY_CART'
+                }) 
+                navigate("/home");
+            })
+            .catch((err) => console.warn(err));
     };
 
 
@@ -101,7 +114,7 @@ export default function Payment() {
                                 </p>
                             </>
                         )}
-                        decimalScale={2}
+                        // decimalScale={0}
                         value={getCartTotal(cart)}
                         displayType="text"
                         thousandSeparator={true}
