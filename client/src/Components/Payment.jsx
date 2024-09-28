@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Payment() {
 
-    const [{ address }] = useStateValue();
+    const [{ address, user }] = useStateValue();
     const [{ cart }, dispatch] = useStateValue();
     const [clientSecret, setClientSecret] = useState("");
     const elements = useElements()
@@ -45,10 +45,16 @@ export default function Payment() {
                 },
             })
             .then((result) => {
-                alert("Payment successful!")
+                axios.post("/orders/add", {
+                    cart: cart,
+                    price: getCartTotal(cart),
+                    email: user?.email,
+                    address: address,
+                });
+
                 dispatch({
                     type: 'EMPTY_CART'
-                }) 
+                })
                 navigate("/home");
             })
             .catch((err) => console.warn(err));

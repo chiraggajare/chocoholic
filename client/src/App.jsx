@@ -15,7 +15,7 @@ import Address from './Components/Address'
 import Payment from './Components/Payment'
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
-
+import Orders from './Components/Orders'
 const promise = loadStripe(
   'pk_test_51Q3kVEFzzbHUbHQM3DYQSlPFLjeIkAjCRd4RvHWlfdbW3ZdFE4Jp47miVxvQXL1bekVD9TjpqsoGEdR57KeRZBoN00lRPca8uo'
 )
@@ -41,6 +41,7 @@ function App() {
           </Elements>
         }>
         </Route>
+        <Route path="/orders" element={<Orders />}></Route>
 
 
 

@@ -4,10 +4,11 @@ const cors = require('cors')
 const ChocoModel = require('./models/UserAuth')
 const productModel = require('./models/Products')
 const stripe = require('stripe')('sk_test_51Q3kVEFzzbHUbHQMs5JddpdBuQcI41cg6DaEEr40bn15ChUkWgljBGRNXMzUrwpPJm5TrTW8FCmXBt9c2urcn9Pm00DTtkpwoF')
-
+const orderModel = require('./models/Orders')
 const app = express()
 app.use(express.json())
 app.use(cors())
+
 
 //this is mongodb linking (compass)
 
@@ -36,6 +37,24 @@ app.post('/login', (req, res) => {
         })
 })
 
+// app.post("/login", async (req, res) => {
+//     const { email, password } = req.body;
+
+//     const userDetail = await ChocoModel.findOne({ email: email });
+
+//     if (userDetail) {
+//         if (await bcrypt.compare(password, userDetail.password)) {
+//             res.send(userDetail);
+//         } else {
+//             res.send({ error: "invaild Password" });
+//         }
+//     } else {
+//         res.send({ error: "user is not exist" });
+//     }
+// });
+
+
+
 // this is for register
 
 app.post('/register', (req, res) => {
@@ -44,34 +63,57 @@ app.post('/register', (req, res) => {
         .catch(err => res.json(err))
 })
 
+// API for SIGNUP
 
-// to add a product
+// app.post("/register", async (req, res) => {
+//     const { email, password, name, phone } = req.body;
 
-app.post('/products/add', (req, res) => {
+//     const encrypt_password = await bcrypt.hash(password, 10);
 
-    productModel.create(req.body)
-        .then(products => res.json(products))
-        .catch(err => res.json(err))
-    // const productDetail = req.body;
+//     const userDetail = {
+//         email: email,
+//         password: encrypt_password,
+//         phone: phone,
+//         name: name,
+//     };
+
+//     const user_exist = await ChocoModel.findOne({ email: email });
+
+//     ChocoModel.create(userDetail)
+//         .then(result => {
+//             res.send({ message: "User Created Successfully" });
+//         })
+//         .catch(err => {
+//             res.status(500).send({ message: err.message });
+//         });
+
+//     // if (user_exist) {
+//     //     res.send({ message: "The Email is already in use !" });
+//     // } else {
+//     //     ChocoModel.create(userDetail, (err, result) => {
+//     //         if (err) {
+//     //             res.status(500).send({ message: err.message });
+//     //         } else {
+//     //             res.send({ message: "User Created Succesfully" });
+//     //         }
+//     //     });
+//     // }
+// });
 
 
-    // console.log("Product Details >>>>>>>",productDetail);
-})
+
+
+
+
+
+
+
+
+
+
 
 
 // get the data from the database
-
-
-
-// app.get('/products/get', (req, res) => {
-//     productModel.find((err, data) => {
-//         if (err) {
-//             res.status(500).send(err)
-//         } else {
-//             res.status(200).send(data)
-//         }
-//     })
-// })
 
 
 app.get("/products/get", (req, res) => {
@@ -96,7 +138,7 @@ app.post('/payment/create', async (req, res) => {
 
 
     const payment = await stripe.paymentIntents.create({
-        amount: total*100,
+        amount: total * 100,
         currency: 'inr'
     })
 
@@ -105,6 +147,60 @@ app.post('/payment/create', async (req, res) => {
     });
 });
 
+
+
+// to add a product
+
+app.post('/products/add', (req, res) => {
+
+    productModel.create(req.body)
+        .then(products => res.json(products))
+        .catch(err => res.json(err))
+    // const productDetail = req.body;
+
+
+    // console.log("Product Details >>>>>>>",productDetail);
+})
+
+
+// api to add order details
+
+app.post('/orders/add', (req, res) => {
+    const products = req.body.cart;
+    const price = req.body.price;
+    const email = req.body.email;
+    const address = req.body.address;
+
+    const orderDetail = {
+        products: products,
+        price: price,
+        address: address,
+        email: email,
+    };
+
+
+
+    orderModel.create(orderDetail)
+        .then((result) => {
+            console.log("order added to database >> ", result);
+        })
+        .catch((err) => {
+            console.error("Error adding order to database:", err);
+        });
+});
+
+app.post("/orders/get", (req, res) => {
+    const email = req.body.email;
+
+    orderModel.find({ email }) // Use object destructuring for email filter
+        .then((userOrders) => {
+            res.send(userOrders);
+        })
+        .catch((err) => {
+            console.error("Error finding orders:", err);
+            res.status(500).send({ message: "Error retrieving orders" }); // Handle error with user-friendly message
+        });
+});
 
 
 

@@ -45,8 +45,12 @@ export default function Navbar() {
                         <div className="navbar-nav d-none d-lg-inline-flex ms-auto">
 
 
+                            <div className="nav-item" onClick={() => navigate('/orders')}>
+                                <a className="nav-link mx-2 active text-light">Orders</a>
+                            </div>
+
                             <div className="nav-item" onClick={user ? () => signOut() : () => navigate("/login")}>
-                                <a className="nav-link mx-2 active text-light">Welcome  {user ? user?.name : ""}</a>
+                                <a className="nav-link mx-2 active text-light">Welcome  {user ? user?.name : "Guest"}</a>
                             </div>
 
 
